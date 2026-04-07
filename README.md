@@ -27,6 +27,19 @@ BeatHub is a robust, Node.js-based music streaming and sharing platform backend.
 - User credentials: `user@beathub.dev` / `User1234!`
 - Key endpoints: `POST /api/auth/login`, `GET /api/auth/me`, `GET /api/songs`, `POST /api/songs` (admin only)
 
+### Render Deployment
+
+When deploying to Render, set these environment variables in the Render service settings:
+
+- `MONGO_URI`: a reachable MongoDB connection string, such as MongoDB Atlas or another hosted database
+- `JWT_SECRET`: a strong random secret used to sign authentication tokens
+- `JWT_EXPIRES_IN`: optional, defaults to `1d`
+- `NODE_ENV`: recommended value is `production`
+
+Do not point `MONGO_URI` at `localhost` or a Docker-only hostname such as `db` when running on Render. The service must be able to reach the database over the network.
+
+The current startup code exits immediately if `MONGO_URI` or `JWT_SECRET` is missing, so a Render deploy will fail until both values are configured.
+
 ### Prerequisites
 
 - Node.js (v18 or higher)
