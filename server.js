@@ -14,6 +14,11 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 const NODE_ENV = process.env.NODE_ENV || "development";
+const FRONTEND_URLS = (process.env.FRONTEND_URLS || "")
+  .split(",")
+  .map((url) => url.trim())
+  .filter(Boolean);
+const PUBLIC_API_URL = process.env.PUBLIC_API_URL || `http://localhost:${PORT}`;
 const RATE_LIMIT_WINDOW_MINUTES = Number.parseInt(
   process.env.RATE_LIMIT_WINDOW_MINUTES || "15",
   10,
@@ -53,16 +58,23 @@ const globalLimiter = rateLimit({
 app.use(globalLimiter);
 
 app.use(express.json({ limit: "10kb" }));
-app.use(mongoSanitize());
+app.use((req, _res, next) => {
+  // Express 5 exposes req.query as a getter-only property, so sanitize in place.
+  if (req.body) mongoSanitize.sanitize(req.body);
+  if (req.params) mongoSanitize.sanitize(req.params);
+  if (req.headers) mongoSanitize.sanitize(req.headers);
+  if (req.query) mongoSanitize.sanitize(req.query);
+  next();
+});
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://beathub-frontend.com",
-];
+const allowedOrigins =
+  NODE_ENV === "production"
+    ? FRONTEND_URLS
+    : ["http://localhost:3000", ...FRONTEND_URLS];
 
 const corsOptionsProd = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("CORS policy violation"), false);
@@ -81,6 +93,19 @@ if (process.env.NODE_ENV === "production") {
 
 app.get("/health", (_req, res) => {
   res.status(200).json({ status: "ok", environment: NODE_ENV });
+});
+
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "BeatHub Backend API",
+    health: "/health",
+    apiUrl: PUBLIC_API_URL || null,
+  });
+});
+
+app.get("/favicon.ico", (_req, res) => {
+  res.status(204).end();
 });
 
 // Mount the songs routes

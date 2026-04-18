@@ -22,7 +22,7 @@ BeatHub is a robust, Node.js-based music streaming and sharing platform backend.
 
 ### Production Verification
 
-- Live URL: REPLACE_WITH_YOUR_RENDER_URL
+- Live URL: set `PUBLIC_API_URL` to your deployed backend URL
 - Admin credentials: set from `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`
 - User credentials: set from `SEED_USER_EMAIL` / `SEED_USER_PASSWORD`
 - Key endpoints:
@@ -49,6 +49,8 @@ When deploying to Render, set these environment variables in the Render service 
 - `JWT_SECRET`: a strong random secret used to sign authentication tokens
 - `JWT_EXPIRES_IN`: optional, defaults to `1d`
 - `NODE_ENV`: recommended value is `production`
+- `FRONTEND_URLS`: comma-separated frontend origins allowed by CORS (example: `https://your-frontend.vercel.app,https://yourdomain.com`)
+- `PUBLIC_API_URL`: public backend URL shown in `GET /` response (example: `https://your-backend.onrender.com`)
 
 Do not point `MONGO_URI` at `localhost` or a Docker-only hostname such as `db` when running on Render. The service must be able to reach the database over the network.
 
