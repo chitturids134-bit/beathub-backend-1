@@ -1,14 +1,9 @@
 # .gitignore
 # Node.js modules
-node_modules/
-
-# Environment variables
-.env
-
-# Optional: log files, build artifacts
-npm-debug.log*
 build/
 dist/
 
-# Local archive artifact
+node_modules/
+build/
+dist/
 Akhilan_BeatHub_Module4.zip
