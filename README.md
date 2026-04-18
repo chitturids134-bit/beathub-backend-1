@@ -51,10 +51,27 @@ When deploying to Render, set these environment variables in the Render service 
 - `NODE_ENV`: recommended value is `production`
 - `FRONTEND_URLS`: comma-separated frontend origins allowed by CORS (example: `https://your-frontend.vercel.app,https://yourdomain.com`)
 - `PUBLIC_API_URL`: public backend URL shown in `GET /` response (example: `https://your-backend.onrender.com`)
+- `MONGO_SERVER_SELECTION_TIMEOUT_MS`: optional, defaults to `5000`
 
 Do not point `MONGO_URI` at `localhost` or a Docker-only hostname such as `db` when running on Render. The service must be able to reach the database over the network.
 
 The current startup code exits immediately if `MONGO_URI` or `JWT_SECRET` is missing, so a Render deploy will fail until both values are configured.
+
+### Vercel Deployment
+
+This project now includes a serverless entry point at `api/index.js` and `vercel.json` for Vercel routing compatibility.
+
+Set these environment variables in Vercel:
+
+- `MONGO_URI`
+- `JWT_SECRET`
+- `JWT_EXPIRES_IN` (optional)
+- `NODE_ENV=production`
+- `FRONTEND_URLS`
+- `PUBLIC_API_URL`
+- `MONGO_SERVER_SELECTION_TIMEOUT_MS` (optional)
+
+The backend uses a cached MongoDB connection in serverless mode to reduce cold-start connection overhead.
 
 ### Prerequisites
 
