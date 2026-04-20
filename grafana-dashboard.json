@@ -1,0 +1,27 @@
+{
+  "dashboard": {
+    "title": "BeatHub Backend Metrics",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "HTTP Request Duration",
+        "targets": [
+          {
+            "expr": "http_server_duration_seconds_bucket{service=\"beathub-backend\"}",
+            "legendFormat": "{{le}}"
+          }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "HTTP Requests Total",
+        "targets": [
+          {
+            "expr": "http_server_requests_total{service=\"beathub-backend\"}",
+            "legendFormat": "{{method}} {{status}}"
+          }
+        ]
+      }
+    ]
+  }
+}
