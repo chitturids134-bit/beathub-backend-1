@@ -1,8 +1,12 @@
 // server.js
 // Main entry point for BeatHub backend with OpenTelemetry instrumentation
 
+
 // --- OpenTelemetry Instrumentation ---
 require("./otel-instrumentation");
+
+// --- Database Connection ---
+require("./src/config/database");
 
 // --- Express App ---
 const app = require("./src/app");
