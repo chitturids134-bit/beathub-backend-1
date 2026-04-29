@@ -1,3 +1,7 @@
+// Root route for Render health and basic check
+app.get("/", (req, res) => {
+  res.send("BeatHub backend is running!");
+});
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
