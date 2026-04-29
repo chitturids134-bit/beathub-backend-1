@@ -6,7 +6,6 @@ if (!MONGO_URI) {
   throw new Error("MONGO_URI environment variable not set");
 }
 
-
 mongoose
   .connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))
