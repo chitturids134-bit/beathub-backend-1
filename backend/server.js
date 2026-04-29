@@ -1,6 +1,8 @@
 // server.js
 // Main entry point for BeatHub backend with OpenTelemetry instrumentation
 
+// --- Load environment variables ---
+require("dotenv").config();
 
 // --- OpenTelemetry Instrumentation ---
 require("./otel-instrumentation");
