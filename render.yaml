@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: beathub-backend
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Add other environment variables as needed
