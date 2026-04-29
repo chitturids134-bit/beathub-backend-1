@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Register from "./Register.jsx";
 import Login from "./Login.jsx";
+import SongList from "./SongList.jsx";
+import PlaylistList from "./PlaylistList.jsx";
 
 function App() {
   const [route, setRoute] = useState(window.location.hash);
@@ -17,6 +19,10 @@ function App() {
     content = <Register />;
   } else if (route === "#login") {
     content = <Login />;
+  } else if (route === "#songs") {
+    content = <SongList />;
+  } else if (route === "#playlists") {
+    content = <PlaylistList />;
   } else {
     content = (
       <>
@@ -33,6 +39,12 @@ function App() {
             </a>
             <a className="btn" href="#login">
               Sign In
+            </a>
+            <a className="btn" href="#songs">
+              Song Library
+            </a>
+            <a className="btn" href="#playlists">
+              Playlists
             </a>
           </div>
         </section>
@@ -56,6 +68,8 @@ function App() {
         <h1>🎵 BeatHub</h1>
         <nav>
           <a href="#features">Features</a>
+          <a href="#songs">Song Library</a>
+          <a href="#playlists">Playlists</a>
           <a href="#login">Login</a>
           <a href="#register">Register</a>
         </nav>
