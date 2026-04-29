@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-const API_URL =
-  import.meta.env.VITE_API_URL || "https://beathub-backend-nb9m.vercel.app/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 export default function Register() {
   const [form, setForm] = useState({ email: "", password: "", name: "" });
